@@ -1,11 +1,18 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+
+import { publicRoutes } from './routes/publicRoutes';
 
 const App = () => {
   return (
-    <div>
-      <p>we cleaner</p>
-      <button className='btn btn-primary'>button</button>
-    </div>
+    <Navbar>
+      <Routes>
+        {publicRoutes.map(({ path, Component }, index) => (
+          <Route key={index} path={path} element={<Component />} />
+        ))}
+      </Routes>
+    </Navbar>
   );
 };
 
