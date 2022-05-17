@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { themeChange } from 'theme-change'
+import userImg from '../assets/images/user.jpg'
 themeChange()
 const Navbar = ({ children }) => {
-    useEffect(() => {
-        themeChange(false)
-    }, [])
+    const [dark, setDark] = useState(false);
+    const user = true;
+
     const navLink =
         <>
             <li >
@@ -23,12 +24,52 @@ const Navbar = ({ children }) => {
             <li >
                 <NavLink to='/book' className='mx-1 rounded-lg '>Book Now</NavLink>
             </li>
-            <li >
-                <NavLink to='/login' className='mx-1 rounded-lg btn btn-outline  '>LOGIN</NavLink>
-            </li>
 
-            <label class='swap swap-rotate'>
-                <input type='checkbox' data-toggle-theme='dark,light' />
+            {user ?
+                <div>
+
+                    <div class="dropdown dropdown-end dropdown-hover">
+                        <label tabindex="0" class="m-1"><div class="avatar online mt-2 mr-2">
+                            <div class="w-8 h-8 rounded-full">
+                                <img src={user.photoURL || userImg} alt='' />
+                            </div>
+                        </div></label>
+                        <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 flex flex-col justify-center items-center p-2">
+                            <div className='flex flex-col'>
+                                <div class="avatar">
+                                    <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                        <img src={user.photoURL || userImg} alt='' />
+                                    </div>
+                                </div>
+                                <p className='mt-2'>User Name</p>
+                                <small>Email Address</small>
+                            </div>
+                            <div class="divider">OR</div>
+                            <li><span>Dashboard</span></li>
+
+                            <li><button>Logout</button></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="dropdown dropdown-end">
+
+                        <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                            <li><a>Item 1</a></li>
+                            <li><a>Item 2</a></li>
+                        </ul>
+                    </div>
+                </div>
+                :
+                <li >
+                    <NavLink to='/login' className='mx-1 rounded-lg btn btn-outline  '>LOGIN</NavLink>
+                </li>}
+
+            <label
+
+                class='swap swap-rotate'>
+                <input type='checkbox'
+                    onClick={() => setDark(!dark)} />
 
                 <svg
                     class='swap-on fill-current w-10 h-10'
@@ -51,7 +92,7 @@ const Navbar = ({ children }) => {
 
         </>
     return (
-        <div class="drawer  drawer-end">
+        <div data-theme={dark ? 'dark' : 'light'} class="drawer  drawer-end">
             <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content flex flex-col">
 
